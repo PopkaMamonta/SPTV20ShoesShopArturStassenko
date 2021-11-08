@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import tools.SaverToFiles;
 
 
@@ -40,7 +42,7 @@ import tools.SaverToFiles;
                 System.out.println("5: Покупка обуви пользователем");
                 System.out.println("6: Доход магазина за все время работы");
                 System.out.println("7: Добавить денег пользователю");
-                int task=scanner.nextInt();scanner.nextLine();
+                int task=getNumber();
                 switch (task) {
                     case 0:
                         repeat="no";
@@ -67,7 +69,7 @@ import tools.SaverToFiles;
                         addMoneyUser();
                         break;
                     default:
-                        System.out.println("Выберите номер из списка!");
+                        System.out.println("Попробуй еще раз!");
                 }
             }while("yes".equals(repeat));
             System.out.println("Пока!");
@@ -82,28 +84,35 @@ import tools.SaverToFiles;
         model.setSize(scanner.nextInt());scanner.nextLine();
         System.out.print("Введите цену обуви: ");
         model.setPrice(scanner.nextInt());scanner.nextLine();
+        System.out.print("Введите количество экземпляров: ");
+        model.setQuantity(scanner.nextInt());scanner.nextLine();
         models.add(model);
         saverToFiles.saveModels(models);
     }
-    private void listModel(){
+    private Set<Integer> listModel(){
+        Set<Integer> setNumbersModels=new HashSet<>();
         System.out.println("----- Список обуви -----");
         int n=0;
         for (int i = 0;i < models.size(); i++) {
-            if (models.get(i)!=null) {
-                System.out.printf("%d Брэнд: %s, Название: %s, Размер: %d, Цена: %d.%n"
+            if (models.get(i)!=null
+                    && models.get(i).getQuantity()>0) {
+                System.out.printf("%d Брэнд: %s, Название: %s, Размер: %d, Цена: %d, В наличии: %d.%n"
                 ,i+1
                 ,models.get(i).getBrand()
                 ,models.get(i).getName()
                 ,models.get(i).getSize()
                 ,models.get(i).getPrice()
+                ,models.get(i).getQuantity()
                 );
+                setNumbersModels.add(i+1);
             }
             n++;
         }
     if (n<1) {
         System.out.println("Нет обуви в наличии.");
-        return;
+        return setNumbersModels;
     }
+        return setNumbersModels;
     }
     private void addUser(){
         User user=new User();
@@ -118,8 +127,9 @@ import tools.SaverToFiles;
         users.add(user);
         saverToFiles.saveUsers(users);
     }
-    private void regListUser(){
+     private Set<Integer> regListUser(){
         System.out.println("----- Список пользователей -----");
+        Set<Integer> setNumbersUsers = new HashSet<>();
         int n=0;
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i)!=null) {
@@ -130,57 +140,29 @@ import tools.SaverToFiles;
                 ,users.get(i).getTel()
                 ,users.get(i).getAmountMoney()
                 );
+                setNumbersUsers.add(i+1);
             }
             n++;
         }
         if (n<1) {
         System.out.println("Нет зарегистрированных пользователей");
-        return;
+        return setNumbersUsers;
     }
+        return setNumbersUsers;
     }
     private void purchaseShoe(){
         Shop shop=new Shop();
         System.out.println("----- Покупка обуви -----");
-        System.out.println("Список обуви: ");
-        int n=0;
-        for (int i = 0;i < models.size(); i++) {
-            if (models.get(i)!=null) {
-                System.out.printf("%d Брэнд: %s, Название: %s, Размер: %d, Цена: %d.%n"
-                ,i+1
-                ,models.get(i).getBrand()
-                ,models.get(i).getName()
-                ,models.get(i).getSize()
-                ,models.get(i).getPrice()
-                );
-            }
-            n++;
-        }
-    if (n<1) {
-        System.out.println("Нет обуви в наличии.");
-        return;
+        Set<Integer> setNumbersModels = listModel();
+        if(setNumbersModels.isEmpty()){
+            System.out.println("Нет моделей в наличии");
+            return;
     }
         System.out.print("Выберите номер обуви: ");
-        int numberModel=scanner.nextInt();scanner.nextLine();
-        System.out.println("Список пользователей: ");
-        int f=0;
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i)!=null) {
-                System.out.printf("%d Имя: %s, Фамилия: %s, Номер телефона: %s, Кол-во денег: %d.%n"
-                ,i+1
-                ,users.get(i).getName()
-                ,users.get(i).getSurname()
-                ,users.get(i).getTel()
-                ,users.get(i).getAmountMoney()
-                );
-            }
-            f++;
-        }
-        if (f<1) {
-        System.out.println("Нет зарегистрированных пользователей");
-        return;
-    }
+        int numberModel= insertNumber(setNumbersModels);
+        Set<Integer> setNumbersUsers= regListUser();
         System.out.print("Выберите номер пользователя: ");
-        int numberUser=scanner.nextInt();scanner.nextLine();
+        int numberUser= insertNumber(setNumbersUsers);
             if (users.get(numberUser-1).getAmountMoney()>=models.get(numberModel-1).getPrice()) {
             shop.setCountPurchases(shops.get(0).getCountPurchases()+1);
             History history=new History();
@@ -223,30 +205,37 @@ import tools.SaverToFiles;
         );
     }
     public void addMoneyUser(){
-        System.out.println("Список пользователей: ");
-        int f=0;
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i)!=null) {
-                System.out.printf("%d Имя: %s, Фамилия: %s, Номер телефона: %s, Кол-во денег: %d.%n"
-                ,i+1
-                ,users.get(i).getName()
-                ,users.get(i).getSurname()
-                ,users.get(i).getTel()
-                ,users.get(i).getAmountMoney()
-                );
-            }
-            f++;
-        }
-        if (f<1) {
-        System.out.println("Нет зарегистрированных пользователей");
-        return;
-    }
+        Set<Integer> setNumbersUsers= regListUser();
         System.out.print("Выберите номер пользователя: ");
-        int numberUser=scanner.nextInt();scanner.nextLine();
+        int numberUser= insertNumber(setNumbersUsers);
         System.out.print("Введите кол-во евро, которые будут перведены пользователю: ");
         int numberMoney=scanner.nextInt();scanner.nextLine();
         users.get(numberUser-1).setAmountMoney(users.get(numberUser-1).getAmountMoney()+numberMoney);
         saverToFiles.saveUsers(users);
+    }
+    private int getNumber() {
+        int number;
+        do{
+           String strNumber = scanner.nextLine();
+           try {
+               number = Integer.parseInt(strNumber);
+               return number;
+           } catch (NumberFormatException e) {
+               System.out.println("Введено \""+strNumber+"\". Выбирайте номер ");
+           }
+       }while(true);
+    }
+
+    private int insertNumber(Set<Integer> setNumbers) {
+        int number=0;
+        do{
+           number = getNumber();
+           if(setNumbers.contains(number)){
+               break;
+           }
+           System.out.println("Попробуй еще раз: ");
+       }while(true);
+       return number; 
     }
     }
        
