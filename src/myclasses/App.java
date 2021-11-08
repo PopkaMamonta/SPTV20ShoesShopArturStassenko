@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
+import tools.SaverToFiles;
 
 
     public class App {
@@ -18,7 +19,15 @@ import java.util.Scanner;
         private List<Model> models=new ArrayList<>();
         private List<User> users=new ArrayList<>();
         private List<History> histories=new ArrayList<>();
-        Shop shop=new Shop();
+        private List<Shop> shops=new ArrayList<>();
+        private SaverToFiles saverToFiles = new SaverToFiles();
+
+        public App(){
+            models = saverToFiles.loadModels();
+            users= saverToFiles.loadUsers();
+            histories=saverToFiles.loadHistories();
+            shops=saverToFiles.loadShops();
+        }
         public void run(){
         String repeat="yes";
             do{
@@ -30,7 +39,7 @@ import java.util.Scanner;
                 System.out.println("4: Список зарегистрированных пользователей");
                 System.out.println("5: Покупка обуви пользователем");
                 System.out.println("6: Доход магазина за все время работы");
-                System.out.println("7: Добавить денег покупателю");
+                System.out.println("7: Добавить денег пользователю");
                 int task=scanner.nextInt();scanner.nextLine();
                 switch (task) {
                     case 0:
@@ -74,6 +83,7 @@ import java.util.Scanner;
         System.out.print("Введите цену обуви: ");
         model.setPrice(scanner.nextInt());scanner.nextLine();
         models.add(model);
+        saverToFiles.saveModels(models);
     }
     private void listModel(){
         System.out.println("----- Список обуви -----");
@@ -106,6 +116,7 @@ import java.util.Scanner;
         System.out.print("Введите количество денег пользователя: "); 
         user.setAmountMoney(scanner.nextInt());scanner.nextLine();
         users.add(user);
+        saverToFiles.saveUsers(users);
     }
     private void regListUser(){
         System.out.println("----- Список пользователей -----");
@@ -128,7 +139,7 @@ import java.util.Scanner;
     }
     }
     private void purchaseShoe(){
-        int count=0;
+        Shop shop=new Shop();
         System.out.println("----- Покупка обуви -----");
         System.out.println("Список обуви: ");
         int n=0;
@@ -171,28 +182,32 @@ import java.util.Scanner;
         System.out.print("Выберите номер пользователя: ");
         int numberUser=scanner.nextInt();scanner.nextLine();
             if (users.get(numberUser-1).getAmountMoney()>=models.get(numberModel-1).getPrice()) {
-            shop.setCountPurchases(count+1);
+            shop.setCountPurchases(shops.get(0).getCountPurchases()+1);
             History history=new History();
             history.setModel(models.get(numberModel-1));
             history.setUser(users.get(numberUser-1));
             Calendar c=new GregorianCalendar();
-            history.setPurchaseBook(c.getTime());
+            history.setPurchaseModel(c.getTime());
             histories.add(history);
+            saverToFiles.saveHistories(histories);
             System.out.printf("Покупка совершена!%n"
                 +"Покупатель: %s %s tel: %s.%n"
                 +"Покупка: %s %s %d размера, по цене %d евро.%n"
                 +"Дата покупки: %s.%n"
-                ,histories.get(shop.getCountPurchases()-1).getUser().getName()
-                ,histories.get(shop.getCountPurchases()-1).getUser().getSurname()
-                ,histories.get(shop.getCountPurchases()-1).getUser().getTel()
-                ,histories.get(shop.getCountPurchases()-1).getModel().getBrand()
-                ,histories.get(shop.getCountPurchases()-1).getModel().getName()
-                ,histories.get(shop.getCountPurchases()-1).getModel().getSize()
-                ,histories.get(shop.getCountPurchases()-1).getModel().getPrice()
-                ,histories.get(shop.getCountPurchases()-1).getPurchaseBook()
+                ,histories.get(numberUser-1).getUser().getName()
+                ,histories.get(numberUser-1).getUser().getSurname()
+                ,histories.get(numberUser-1).getUser().getTel()
+                ,histories.get(numberModel-1).getModel().getBrand()
+                ,histories.get(numberModel-1).getModel().getName()
+                ,histories.get(numberModel-1).getModel().getSize()
+                ,histories.get(numberModel-1).getModel().getPrice()
+                ,histories.get(numberModel-1).getPurchaseModel()
                 );
             users.get(numberUser-1).setAmountMoney(users.get(numberUser-1).getAmountMoney()-models.get(numberModel-1).getPrice());
-            shop.setIncome(models.get(numberModel-1).getPrice()+shop.getIncome());
+            saverToFiles.saveUsers(users);
+            shops.get(0).setIncome(models.get(numberModel-1).getPrice()+shops.get(0).getIncome());
+            shops.add(shop);
+            saverToFiles.saveShops(shops);
             }else{
                 System.out.println("У пользователя не хватает средств для покупки данных пар обуви!");    
                     }
@@ -204,7 +219,7 @@ import java.util.Scanner;
     public void incomeShop(){
         System.out.println("----- Доход компании за все время -----");
         System.out.printf("%d EUR.%n"
-        ,shop.getIncome()
+        ,shops.get(0).getIncome()
         );
     }
     public void addMoneyUser(){
@@ -231,6 +246,7 @@ import java.util.Scanner;
         System.out.print("Введите кол-во евро, которые будут перведены пользователю: ");
         int numberMoney=scanner.nextInt();scanner.nextLine();
         users.get(numberUser-1).setAmountMoney(users.get(numberUser-1).getAmountMoney()+numberMoney);
+        saverToFiles.saveUsers(users);
     }
     }
        

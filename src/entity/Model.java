@@ -1,8 +1,10 @@
 
 package entity;
 
+import java.io.Serializable;
 
-public class Model {
+
+public class Model implements Serializable{
     private String brand;
     private int size;
     private String name;

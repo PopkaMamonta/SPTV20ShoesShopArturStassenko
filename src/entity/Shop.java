@@ -1,7 +1,9 @@
 
 package entity;
 
-public class Shop {
+import java.io.Serializable;
+
+public class Shop implements Serializable{
     private int income;
     private int countPurchases;
 

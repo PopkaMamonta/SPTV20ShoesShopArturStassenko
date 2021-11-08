@@ -1,12 +1,13 @@
 
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class History {
+public class History implements Serializable{
     private Model model;
     private User user;
-    private Date purchaseBook;
+    private Date purchaseModel;
 
 
     public History(){
@@ -29,11 +30,11 @@ public class History {
         this.user = user;
     }
 
-    public Date getPurchaseBook() {
-        return purchaseBook;
+    public Date getPurchaseModel() {
+        return purchaseModel;
     }
 
-    public void setPurchaseBook(Date purchaseBook) {
-        this.purchaseBook = purchaseBook;
+    public void setPurchaseModel(Date purchaseModel) {
+        this.purchaseModel = purchaseModel;
     }
 }
