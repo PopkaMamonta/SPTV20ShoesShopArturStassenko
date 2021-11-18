@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
+import tools.SaverToBase;
 import tools.SaverToFiles;
 
 
@@ -19,9 +20,14 @@ import tools.SaverToFiles;
         private List<User> users=new ArrayList<>();
         private List<History> histories=new ArrayList<>();
         private List<Shop> shops=new ArrayList<>();
-        private SaverToFiles saverToFiles = new SaverToFiles();
+        //private SaverToFiles saverToFiles = new SaverToFiles();
+        private SaverToBase saverToFiles = new SaverToBase();
 
         public App(){
+           // models = saverToFiles.loadModels();
+           // users= saverToFiles.loadUsers();
+           // histories=saverToFiles.loadHistories();
+           // shops=saverToFiles.loadShops();
             models = saverToFiles.loadModels();
             users= saverToFiles.loadUsers();
             histories=saverToFiles.loadHistories();
@@ -39,6 +45,8 @@ import tools.SaverToFiles;
                 System.out.println("5: Покупка обуви пользователем");
                 System.out.println("6: Доход магазина за все время работы");
                 System.out.println("7: Добавить денег пользователю");
+                System.out.println("8: Редактировать товар");
+                System.out.println("9: Редактировать пользователя");
                 int task=getNumber();
                 switch (task) {
                     case 0:
@@ -64,6 +72,12 @@ import tools.SaverToFiles;
                         break;
                     case 7:
                         addMoneyUser();
+                        break;
+                    case 8:
+                        changeModel();
+                        break;
+                    case 9:
+                        changeUser();
                         break;
                     case 10:
                         initiateIncome();
@@ -92,6 +106,7 @@ import tools.SaverToFiles;
         model.setPrice(getNumber());
         System.out.print("Введите количество экземпляров: ");
         model.setQuantity(getNumber());
+
         models.add(model);
         saverToFiles.saveModels(models);
     }
@@ -259,6 +274,7 @@ import tools.SaverToFiles;
         users.get(numberUser-1).setAmountMoney(users.get(numberUser-1).getAmountMoney()+numberMoney);
         saverToFiles.saveUsers(users);
     }
+
     private int getNumber() {
         int number;
         do{
@@ -271,6 +287,130 @@ import tools.SaverToFiles;
            }
        }while(true);
     }
+    private void changeModel(){
+        System.out.println("----- Список обуви -----");
+        int n=0;
+        for (int i = 0;i < models.size(); i++) {
+            if (models.get(i)!=null
+                    && models.get(i).getQuantity()>0) {
+                System.out.printf("%d Брэнд: %s, Название: %s, Размер: %d, Цена: %d, В наличии: %d.%n"
+                ,i+1
+                ,models.get(i).getBrand()
+                ,models.get(i).getName()
+                ,models.get(i).getSize()
+                ,models.get(i).getPrice()
+                ,models.get(i).getQuantity()
+                );
+            }
+            n++;
+        }
+    if (n<1) {
+        System.out.println("Нет обуви в наличии.");
+        return;
     }
-
+        System.out.print("Выберите номер обуви: ");
+        int numberModel= getNumber();
+        String repeat="yes";
+        do{
+            System.out.println("0. Выход");
+            System.out.println("1. Изменить брэнд обуви");
+            System.out.println("2. Изменить название модели");
+            System.out.println("3. Изменить размер модели");
+            System.out.println("4. Изменить цену модели");
+            System.out.println("5. Изменить количество экземпляров");
+            System.out.println("Выберите номер параметра, который хотите изменить: ");
+            int num=getNumber();
+            switch(num){
+                case 0:
+                    repeat="no";
+                    break;
+                case 1:
+                    System.out.print("Введите новый брэнд обуви: ");
+                    String newBrand=scanner.nextLine();
+                    models.get(numberModel-1).setBrand(newBrand);
+                    saverToFiles.saveModels(models);
+                    break;
+                case 2:
+                    System.out.print("Введите новое название модели: ");
+                    String newName=scanner.nextLine();
+                    models.get(numberModel-1).setName(newName);
+                    saverToFiles.saveModels(models);
+                    break;
+                case 3:
+                    System.out.print("Введите новый размер модели: ");
+                    int newSize=getNumber();
+                    models.get(numberModel-1).setSize(newSize);
+                    saverToFiles.saveModels(models);
+                    break;
+                case 4:
+                    System.out.print("Введите новую цену модели: ");
+                    int newPrice=getNumber();
+                    models.get(numberModel-1).setPrice(newPrice);
+                    saverToFiles.saveModels(models);
+                    break;
+                case 5:
+                    System.out.print("Введите новое количество экземпляров: ");
+                    int newQuantity=getNumber();
+                    models.get(numberModel-1).setQuantity(newQuantity);
+                    saverToFiles.saveModels(models);
+                    break;
+            }
+         }while("yes".equals(repeat));
+    }
+    private void changeUser(){
+         System.out.println("----- Список пользователей -----");
+        int n=0;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i)!=null) {
+                System.out.printf("%d Имя: %s, Фамилия: %s, Номер телефона: %s, Кол-во денег: %d.%n"
+                ,i+1
+                ,users.get(i).getName()
+                ,users.get(i).getSurname()
+                ,users.get(i).getTel()
+                ,users.get(i).getAmountMoney()
+                );
+            }
+            n++;
+        }
+        if (n<1) {
+            System.out.println("Нет зарегистрированных пользователей");
+            return;
+        }
+        System.out.print("Выберите номер пользователя: ");
+        int numberUser= getNumber();
+        String repeat="yes";
+        do{
+            System.out.println("0. Выход");
+            System.out.println("1. Изменить имя пользователя");
+            System.out.println("2. Изменить фамилию пользователя");
+            System.out.println("3. Изменить номер пользователя");
+            System.out.println("Выберите номер параметра, который хотите изменить: ");
+            int num=getNumber();
+            switch(num){
+                case 0:
+                    repeat="no";
+                    break;
+                case 1:
+                    System.out.print("Введите новое имя пользователя: ");
+                    String newName=scanner.nextLine();
+                    users.get(numberUser-1).setName(newName);
+                    saverToFiles.saveUsers(users);
+                    break;
+                case 2:
+                    System.out.print("Введите новую фамилию пользователя: ");
+                    String newSurname=scanner.nextLine();
+                    users.get(numberUser-1).setSurname(newSurname);
+                    saverToFiles.saveUsers(users);
+                    break;
+                case 3:
+                    System.out.print("Введите новый номер пользователя: ");
+                    String newTel=scanner.nextLine();
+                    users.get(numberUser-1).setTel(newTel);
+                    saverToFiles.saveUsers(users);
+                    break;
+            }
+         }while("yes".equals(repeat));
+    }
+    }
+    
     

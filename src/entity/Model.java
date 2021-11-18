@@ -2,23 +2,22 @@
 package entity;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-
+@Entity
 public class Model implements Serializable{
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     private String brand;
     private int size;
     private String name;
     private int price;
     private int quantity;
-    private int count;
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
 
     public int getSize() {
         return size;
@@ -34,10 +33,6 @@ public class Model implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-    @Override
-    public String toString() {
-        return "Брэнд: " + brand + ", Название: " + name+", Размер: " + size;
     }
 
     public int getPrice() {
@@ -56,11 +51,19 @@ public class Model implements Serializable{
         this.quantity = quantity;
     }
 
-    public int getCount() {
-        return count;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
