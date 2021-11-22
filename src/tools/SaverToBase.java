@@ -3,7 +3,6 @@ package tools;
 
 import entity.History;
 import entity.Model;
-import entity.Shop;
 import entity.User;
 import interfaces.Keeping;
 import java.util.ArrayList;
@@ -83,27 +82,5 @@ public class SaverToBase implements Keeping {
             histories=new ArrayList<>();
         }
         return histories;
-    }
-
-    @Override
-    public void saveShops(List<Shop> shops) {
-        tx.begin();
-        for (int i = 0;i< shops.size(); i++) {
-            if (shops.get(i).getId()==null) {
-                em.persist(shops.get(i));
-            }
-        }
-        tx.commit();
-    }
-
-    @Override
-    public List<Shop> loadShops() {
-        List<Shop> shops=null;
-        try{
-            return em.createQuery("SELECT s FROM Shop s").getResultList();
-        }catch(Exception e){
-            shops=new ArrayList<>();
-        }
-        return shops;
     }
 }

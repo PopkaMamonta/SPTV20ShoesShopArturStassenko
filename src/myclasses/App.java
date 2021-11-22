@@ -3,10 +3,10 @@ package myclasses;
 
 import entity.History;
 import entity.Model;
-import entity.Shop;
 import entity.User;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +19,6 @@ import tools.SaverToFiles;
         private List<Model> models=new ArrayList<>();
         private List<User> users=new ArrayList<>();
         private List<History> histories=new ArrayList<>();
-        private List<Shop> shops=new ArrayList<>();
         //private SaverToFiles saverToFiles = new SaverToFiles();
         private SaverToBase saverToFiles = new SaverToBase();
 
@@ -31,7 +30,6 @@ import tools.SaverToFiles;
             models = saverToFiles.loadModels();
             users= saverToFiles.loadUsers();
             histories=saverToFiles.loadHistories();
-            shops=saverToFiles.loadShops();
         }
         public void run(){
         String repeat="yes";
@@ -47,6 +45,8 @@ import tools.SaverToFiles;
                 System.out.println("7: Добавить денег пользователю");
                 System.out.println("8: Редактировать товар");
                 System.out.println("9: Редактировать пользователя");
+                System.out.println("10: Доход магазина за определеннный месяц");
+                
                 int task=getNumber();
                 switch (task) {
                     case 0:
@@ -80,7 +80,7 @@ import tools.SaverToFiles;
                         changeUser();
                         break;
                     case 10:
-                        initiateIncome();
+                        incomePerMonth();
                         break;
                     default:
                         System.out.println("Попробуй еще раз!");
@@ -88,12 +88,7 @@ import tools.SaverToFiles;
             }while("yes".equals(repeat));
             System.out.println("Пока!");
         }
-    private void initiateIncome(){
-        Shop shop=new Shop();
-        shop.setIncome(0);
-        shops.add(shop);
-        saverToFiles.saveShops(shops);
-    }
+
     private void addModel(){
         Model model=new Model();
         System.out.print("Введите брэнд модели обуви: ");
@@ -234,8 +229,6 @@ import tools.SaverToFiles;
                 );
             users.get(numberUser-1).setAmountMoney(users.get(numberUser-1).getAmountMoney()-models.get(numberModel-1).getPrice());
             saverToFiles.saveUsers(users);
-            shops.get(0).setIncome(models.get(numberModel-1).getPrice()+shops.get(0).getIncome());
-            saverToFiles.saveShops(shops);
             }else{
                 System.out.println("У пользователя не хватает средств для покупки данных пар обуви!");    
             }
@@ -244,8 +237,13 @@ import tools.SaverToFiles;
     
     public void incomeShop(){
         System.out.println("----- Доход компании за все время -----");
-        System.out.printf("%d EUR.%n"
-        ,shops.get(0).getIncome()
+        double income=0;
+        for (int i = 0; i < histories.size(); i++) {
+            if (histories.get(i)!=null){
+                income+=histories.get(i).getModel().getPrice();
+            }
+            }
+        System.out.println(income+" EUR"
         );
     }
     public void addMoneyUser(){
@@ -410,6 +408,35 @@ import tools.SaverToFiles;
                     break;
             }
          }while("yes".equals(repeat));
+    }
+    
+    public void incomePerMonth(){
+        double income=0;
+        System.out.print("Введите год, за который хотите посмотреть доход: ");
+        int years=getNumber();
+        System.out.print("Введите номер месяца, за который хотите посмотреть доход: ");
+        int chosenMonth=getNumber()-1;
+        for (int i = 0; i < histories.size(); i++) {
+            Date date=histories.get(i).getPurchaseModel();
+            boolean toSum= summator(date,chosenMonth,years);
+            if (histories.get(i)!=null & toSum){
+                income+=histories.get(i).getModel().getPrice();
+            }
+        }
+        System.out.println("----- Доход за введенный месяц -----");
+        System.out.println(income+" EUR");
+    }
+
+    private boolean summator(Date date, int chosenMonth,int years) {
+        Calendar cal=Calendar.getInstance();
+        cal.setTime(date);
+        int month=cal.get(Calendar.MONTH);
+        int year=cal.get(Calendar.YEAR);
+        if (month==chosenMonth & year==years) {
+            return true;
+        }else{
+            return false;
+        }
     }
     }
     

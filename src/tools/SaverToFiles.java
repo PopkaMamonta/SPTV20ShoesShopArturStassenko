@@ -3,7 +3,6 @@ package tools;
 
 import entity.History;
 import entity.Model;
-import entity.Shop;
 import entity.User;
 import interfaces.Keeping;
 import java.io.FileInputStream;
@@ -123,40 +122,4 @@ public class SaverToFiles implements Keeping{
         }
         return histories;
     }
-
-    @Override
-    public void saveShops(List<Shop> shops) {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-        try {
-            fos = new FileOutputStream("shops");
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(shops);
-            oos.flush();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SaverToFiles.class.getName()).log(Level.SEVERE, "Нет файла shops", ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SaverToFiles.class.getName()).log(Level.SEVERE, "Ошибка ввода", ex);
-        }
-    }
-
-    @Override
-    public List<Shop> loadShops() {
-        List<Shop> shops =new ArrayList<>();
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        try {
-            fis = new FileInputStream("shops");
-            ois = new ObjectInputStream(fis);
-            shops = (List<Shop>) ois.readObject();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SaverToFiles.class.getName()).log(Level.SEVERE, "shops еше не создан", ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SaverToFiles.class.getName()).log(Level.SEVERE, "Ошибка чтения", ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SaverToFiles.class.getName()).log(Level.SEVERE, "Нет такого файла", ex);
-        }
-        return shops;
-    }
-    
 }
