@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sptv20shoesshoparturstassenkofx.ShopController">
+   <children>
+      <AnchorPane layoutX="-6.0" layoutY="101.0" prefHeight="305.0" prefWidth="707.0" style="-fx-background-color: #fafafa;">
+         <children>
+            <Label layoutX="232.0" layoutY="14.0" prefHeight="42.0" prefWidth="237.0" text="Выберите пункт!">
+               <font>
+                  <Font name="Candara Italic" size="30.0" />
+               </font>
+            </Label>
+            <SplitPane dividerPositions="0.2902654867256637, 0.7221238938053097" layoutX="35.0" layoutY="64.0" minWidth="630.0" prefHeight="209.0" prefWidth="630.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="210.0" prefHeight="160.0" prefWidth="210.0">
+                     <children>
+                        <Button fx:id="add_model" layoutX="33.0" layoutY="30.0" mnemonicParsing="false" onAction="#addModel" prefHeight="33.0" prefWidth="145.0" text="Добавить модель" />
+                        <Button fx:id="add_user" layoutX="33.0" layoutY="144.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Добавить пользователя" />
+                        <Button fx:id="list_model" contentDisplay="CENTER" layoutX="33.0" layoutY="86.0" mnemonicParsing="false" onAction="#listModel" prefHeight="33.0" prefWidth="145.0" text="Список моделей" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minWidth="210.0" prefHeight="158.0" prefWidth="210.0">
+                     <children>
+                        <Button fx:id="reg_listuser" layoutX="26.0" layoutY="30.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Список пользователей" />
+                        <Button fx:id="income_shop" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Доход за все время" />
+                        <Button fx:id="purchase_shoe" layoutX="26.0" layoutY="86.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Покупка обуви" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="210.0" prefHeight="160.0" prefWidth="210.0">
+                     <children>
+                        <Button fx:id="add_moneyuser" layoutX="26.0" layoutY="28.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Добавить денег" />
+                        <Button fx:id="income_permonth" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Доход за месяц" />
+                        <Button fx:id="change_inf" layoutX="26.0" layoutY="87.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Редактировать данные" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </AnchorPane>
+      <Label layoutX="202.0" layoutY="6.0" prefHeight="83.0" prefWidth="297.0" text="ShoesShop" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="System Bold" size="56.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="83.0" fitWidth="87.0" layoutX="106.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/416386_clothes_dunk_nike_shoes_icon.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="35.0" mnemonicParsing="false" onAction="#backButton" prefHeight="25.0" prefWidth="58.0" />
+      <ImageView fitHeight="21.0" fitWidth="39.0" layoutX="32.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/4829870_arrow_back_left_icon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

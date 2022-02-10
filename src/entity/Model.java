@@ -18,6 +18,11 @@ public class Model implements Serializable{
     private int price;
     private int quantity;
 
+    @Override
+    public String toString() {
+        return id+") Брэнд: "+brand+", Название: "+name+", Размер: "+size+", Цена: "+price+", В наличии: "+quantity;
+    }
+
 
     public int getSize() {
         return size;

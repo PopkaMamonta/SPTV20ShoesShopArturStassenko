@@ -6,10 +6,10 @@
     <class>entity.Model</class>
     <class>entity.User</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sptv20shoesshoparturstassenko?zeroDateTimeBehavior=convertToNull&amp;characterEncoding=utf8&amp;useUnicode=true"/>
-      <property name="javax.persistence.jdbc.user" value="sptv20shoesshoparturstassenko"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Shop?zeroDateTimeBehavior=convertToNull&amp;characterEncoding=utf8&amp;useUnicode=true"/>
+      <property name="javax.persistence.jdbc.user" value="Shop"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="sptv20shoesshoparturstassenko"/>
+      <property name="javax.persistence.jdbc.password" value="Shop"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
