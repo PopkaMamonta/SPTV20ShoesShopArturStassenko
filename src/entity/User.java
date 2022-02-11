@@ -37,6 +37,11 @@ public class User implements Serializable{
         return tel;
     }
 
+    @Override
+    public String toString() {
+        return  id + ") Имя: " + name + ", Фамилия: " + surname + ", Номер телефона: " + tel + ", количество денег: " + amountMoney;
+    }
+
     public void setTel(String tel) {
         this.tel = tel;
     }

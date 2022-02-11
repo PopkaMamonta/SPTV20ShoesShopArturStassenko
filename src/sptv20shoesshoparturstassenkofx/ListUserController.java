@@ -1,7 +1,7 @@
 package sptv20shoesshoparturstassenkofx;
 
-import entity.Model;
-import facade.ModelFacade;
+import entity.User;
+import facade.UserFacade;
 import java.io.IOException;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -15,36 +15,34 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import tools.Singleton;
 
-public class ListModelController {
-    private ModelFacade modelFacade;
+public class ListUserController {
+    private UserFacade userFacade;
     private Singleton singleton;
-        
+    
     @FXML
     private Button backButton;
 
     @FXML
-    private ListView<Model> listModel;
-    
+    private ListView<User> listUser;
 
     @FXML
-    public void backButton(ActionEvent event)throws IOException{
+        public void backButton(ActionEvent event)throws IOException{
         Parent tableViewParent=FXMLLoader.load(getClass().getResource("/sptv20shoesshoparturstassenkofx/Shop.fxml"));
         Scene tableViewScene=new Scene(tableViewParent);
         Stage window=(Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         window.show();
         }
-
+    
     @FXML
     public void initialize() {
-        modelFacade= new ModelFacade(Model.class);
+        userFacade= new UserFacade(User.class);
         singleton=Singleton.getInstance();
-        listModel.getItems().clear();
-        List<Model> models=modelFacade.findAll();
-        for (int i = 0;i < models.size(); i++) {
-            listModel.getItems().addAll(models.get(i));
+        listUser.getItems().clear();
+        List<User> users=userFacade.findAll();
+        for (int i = 0;i < users.size(); i++) {
+            listUser.getItems().addAll(users.get(i));
         }    
     }
+
 }
-
-

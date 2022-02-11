@@ -1,11 +1,7 @@
 package sptv20shoesshoparturstassenkofx;
 
-import entity.History;
 import entity.Model;
-import entity.User;
-import facade.HistoryFacade;
 import facade.ModelFacade;
-import facade.UserFacade;
 import java.io.IOException;
 import java.sql.SQLException;
 import javafx.event.ActionEvent;

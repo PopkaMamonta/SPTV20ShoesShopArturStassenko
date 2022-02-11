@@ -67,5 +67,30 @@ public class ShopController {
         window.setScene(tableViewScene);
         window.show();
         }
+    @FXML
+        public void addUser(ActionEvent event)throws IOException{
+        Parent tableViewParent=FXMLLoader.load(getClass().getResource("/sptv20shoesshoparturstassenkofx/AddUser.fxml"));
+        Scene tableViewScene=new Scene(tableViewParent);
+        Stage window=(Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();
+        }
+     @FXML
+        public void regListUser(ActionEvent event)throws IOException{
+        Parent tableViewParent=FXMLLoader.load(getClass().getResource("/sptv20shoesshoparturstassenkofx/ListUser.fxml"));
+        Scene tableViewScene=new Scene(tableViewParent);
+        Stage window=(Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();   
+        }
+     @FXML
+        public void purchaseShoe(ActionEvent event)throws IOException{
+        Parent tableViewParent=FXMLLoader.load(getClass().getResource("/sptv20shoesshoparturstassenkofx/PurchaseShoe.fxml"));
+        Scene tableViewScene=new Scene(tableViewParent);
+        Stage window=(Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();   
+        }
+    
     }
 

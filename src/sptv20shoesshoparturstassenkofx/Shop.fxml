@@ -22,22 +22,22 @@
                 <AnchorPane minHeight="0.0" minWidth="210.0" prefHeight="160.0" prefWidth="210.0">
                      <children>
                         <Button fx:id="add_model" layoutX="33.0" layoutY="30.0" mnemonicParsing="false" onAction="#addModel" prefHeight="33.0" prefWidth="145.0" text="Добавить модель" />
-                        <Button fx:id="add_user" layoutX="33.0" layoutY="144.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Добавить пользователя" />
+                        <Button fx:id="add_user" layoutX="33.0" layoutY="144.0" mnemonicParsing="false" onAction="#addUser" prefHeight="33.0" prefWidth="145.0" text="Добавить пользователя" />
                         <Button fx:id="list_model" contentDisplay="CENTER" layoutX="33.0" layoutY="86.0" mnemonicParsing="false" onAction="#listModel" prefHeight="33.0" prefWidth="145.0" text="Список моделей" />
                      </children>
                   </AnchorPane>
                   <AnchorPane minWidth="210.0" prefHeight="158.0" prefWidth="210.0">
                      <children>
-                        <Button fx:id="reg_listuser" layoutX="26.0" layoutY="30.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Список пользователей" />
+                        <Button fx:id="reg_listuser" layoutX="26.0" layoutY="30.0" mnemonicParsing="false" onAction="#regListUser" prefHeight="33.0" prefWidth="145.0" text="Список пользователей" />
                         <Button fx:id="income_shop" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Доход за все время" />
-                        <Button fx:id="purchase_shoe" layoutX="26.0" layoutY="86.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Покупка обуви" />
+                        <Button fx:id="purchase_shoe" layoutX="26.0" layoutY="86.0" mnemonicParsing="false" onAction="#purchaseShoe" prefHeight="33.0" prefWidth="145.0" text="Покупка обуви" />
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="210.0" prefHeight="160.0" prefWidth="210.0">
                      <children>
                         <Button fx:id="add_moneyuser" layoutX="26.0" layoutY="28.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Добавить денег" />
                         <Button fx:id="income_permonth" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Доход за месяц" />
-                        <Button fx:id="change_inf" layoutX="26.0" layoutY="87.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Редактировать данные" />
+                        <Button fx:id="change_inf" layoutX="26.0" layoutY="87.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" text="Редактировать данных" />
                      </children>
                   </AnchorPane>
               </items>
